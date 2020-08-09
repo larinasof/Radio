@@ -7,56 +7,45 @@ import org.junit.jupiter.params.provider.CsvSource;
 import static org.junit.jupiter.api.Assertions.*;
 
 class RadioTest {
+    Radio radio = new Radio(10);
 
-    @ParameterizedTest
-    @CsvSource(
-            value = {
-                    "'From zero station', 9, 0, 0, 1",
-                    "'From before last station', 9, 0, 8, 9",
-                    "'From last station', 9, 0, 9, 0",
-            }
-    )
-    void shouldChangeToNextStation(String name, int max, int min, int current, int expected) {
-        Radio radio = new Radio();
-        radio.setName(name);
-        radio.setMaxStation(max);
-        radio.setMinStation(min);
-        radio.setCurrentStation(current);
-
+    @Test
+    void shouldChangeToNextStation() {
+        int current = radio.getCurrentStation();
         radio.nextStation();
-        assertEquals(expected, radio.getCurrentStation());
+        assertEquals(current + 1, radio.getCurrentStation());
     }
 
+    @Test
+    void shouldChangeToNextStationFromMax (){
+        int current = radio.getMaxStation();
+        radio.nextStation();
+        assertEquals(0, radio.getCurrentStation());
+    }
 
-    @ParameterizedTest
-    @CsvSource(
-            value = {
-                    "'From zero station', 9, 0, 0, 9",
-                    "'From first station', 9, 0, 1, 0",
-                    "'From last station', 9, 0, 9, 8",
-            }
-    )
-    void shouldChangeToPreviousStation(String name, int max, int min, int current, int expected) {
-        Radio radio = new Radio();
-        radio.setName(name);
-        radio.setMaxStation(max);
-        radio.setMinStation(min);
-        radio.setCurrentStation(current);
-
+    @Test
+    void shouldChangeToPreviousStation() {
+        int current = radio.getCurrentStation();
         radio.previousStation();
-        assertEquals(expected, radio.getCurrentStation());
+        assertEquals(current - 1, radio.getCurrentStation());
+    }
+
+    @Test
+    void shouldChangeToPreviousStationFromMin() {
+        int current = radio.getMinStation();
+        radio.previousStation();
+        assertEquals(10, radio.getCurrentStation());
     }
 
     @ParameterizedTest
     @CsvSource(
             value = {
-                    "'From min volume', 10, 0, 0, 1",
-                    "'From max volume', 10, 0, 10, 10",
-                    "'From middle volume', 10, 0, 5, 6",
+                    "'From min volume', 100, 0, 0, 1",
+                    "'From max volume', 100, 0, 100, 100",
+                    "'From middle volume', 100, 0, 50, 51",
             }
     )
     void shouldIncreaseCurrentVolume(String name, int max, int min, int current, int expected) {
-        Radio radio = new Radio();
         radio.setName(name);
         radio.setMaxVolume(max);
         radio.setMinVolume(min);
@@ -69,13 +58,12 @@ class RadioTest {
     @ParameterizedTest
     @CsvSource(
             value = {
-                    "'From min volume', 10, 0, 0, 0",
-                    "'From max volume', 10, 0, 10, 9",
-                    "'From middle volume', 10, 0, 5, 4",
+                    "'From min volume', 100, 0, 0, 0",
+                    "'From max volume', 100, 0, 100, 99",
+                    "'From middle volume', 100, 0, 50, 49",
             }
     )
     void shouldDecreaseCurrentVolume(String name, int max, int min, int current, int expected) {
-        Radio radio = new Radio();
         radio.setName(name);
         radio.setMaxVolume(max);
         radio.setMinVolume(min);
