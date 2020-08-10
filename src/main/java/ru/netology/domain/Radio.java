@@ -3,7 +3,7 @@ package ru.netology.domain;
 public class Radio {
     private String name = "Radio";
     private boolean on;
-    private int currentStation;
+    private int currentStation = 5;
     private int minStation = 0;
     private int maxStation = 10;
     private int currentVolume = 25;
@@ -12,6 +12,10 @@ public class Radio {
 
     public Radio(int maxStation) {
         this.maxStation = maxStation;
+    }
+
+    public Radio() {
+
     }
 
     public String getName() {
@@ -35,21 +39,32 @@ public class Radio {
     }
 
     public void setCurrentStation(int currentStation) {
+        if (currentStation > maxStation){
+        this.currentStation = 0;
+        return;
+    }
+        if (currentStation < minStation){
+            this.currentStation = 10;
+        return;
+        }
         this.currentStation = currentStation;
     }
 
+
     public void nextStation (){
-        if (this.currentStation == getMaxStation()){
-            setCurrentStation(0);
+        if (this.currentStation == maxStation){
+            this.currentStation = 0;
         }
-        setCurrentStation(this.currentStation + 1);
+        else {
+            this.currentStation ++;}
     }
 
     public void previousStation (){
-        if (this.currentStation == getMinStation()){
-            setCurrentStation(9);
+        if (this.currentStation == minStation){
+            this.currentStation = maxStation;
         }
-        setCurrentStation(this.currentStation - 1);
+        else {
+            this.currentStation --;}
     }
 
     public int getMinStation() {

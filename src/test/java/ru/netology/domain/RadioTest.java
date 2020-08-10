@@ -7,7 +7,8 @@ import org.junit.jupiter.params.provider.CsvSource;
 import static org.junit.jupiter.api.Assertions.*;
 
 class RadioTest {
-    Radio radio = new Radio(10);
+    Radio radio = new Radio();
+    Radio radio2 = new Radio(10);
 
     @Test
     void shouldChangeToNextStation() {
@@ -18,7 +19,7 @@ class RadioTest {
 
     @Test
     void shouldChangeToNextStationFromMax (){
-        int current = radio.getMaxStation();
+        radio.setCurrentStation(radio.getMaxStation());
         radio.nextStation();
         assertEquals(0, radio.getCurrentStation());
     }
@@ -32,7 +33,7 @@ class RadioTest {
 
     @Test
     void shouldChangeToPreviousStationFromMin() {
-        int current = radio.getMinStation();
+        radio.setCurrentStation(radio.getMinStation());
         radio.previousStation();
         assertEquals(10, radio.getCurrentStation());
     }
