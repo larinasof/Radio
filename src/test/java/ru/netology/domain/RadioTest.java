@@ -8,7 +8,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class RadioTest {
     Radio radio = new Radio();
-    Radio radio2 = new Radio(10);
+    Radio radio2 = new Radio("Radio",true,5,0,10,25,0,100);
 
     @Test
     void shouldChangeToNextStation() {
